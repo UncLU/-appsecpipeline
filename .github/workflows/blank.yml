@@ -86,7 +86,7 @@ jobs:
         with:
           name: semgrep-results
           path: semgrep-results.sarif
-          retention-days: 14
+          retention-days: 4
 
 #   zap_scan:
 #     needs: build
