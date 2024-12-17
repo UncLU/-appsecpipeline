@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: webapp
-          path: target/iameter.war
+          path: target/keycloak-metrics-spi-6.0.1-SNAPSHOT.war
           retention-days: 14
 
   semgrep:
@@ -104,7 +104,7 @@ jobs:
         run: |
           wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.83/bin/apache-tomcat-9.0.83.tar.gz
           tar xzf apache-tomcat-9.0.83.tar.gz
-          cp target/iameter.war apache-tomcat-9.0.83/webapps/
+          cp target/keycloak-metrics-spi-6.0.1-SNAPSHOT.war apache-tomcat-9.0.83/webapps/
           chmod +x apache-tomcat-9.0.83/bin/catalina.sh
           apache-tomcat-9.0.83/bin/catalina.sh start
           echo "Waiting for Tomcat to start..."

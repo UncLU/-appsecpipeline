@@ -6,7 +6,7 @@
 
     <artifactId>keycloak-metrics-spi</artifactId>
     <groupId>org.jboss.aerogear</groupId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <version>6.0.1-SNAPSHOT</version>
 
     <properties>
@@ -91,7 +91,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>iameter</finalName>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
