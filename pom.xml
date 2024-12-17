@@ -94,11 +94,11 @@
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>
-                <dependency>
+                <!-- <dependency> -->
                     <groupId>org.owasp</groupId>
                     <artifactId>dependency-check-maven</artifactId>
                     <version>8.4.0</version>
-                </dependency>
+                <!-- </dependency> -->
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -141,11 +141,11 @@
                     </archive>
                 </configuration>
             </plugin>
-            <!-- <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
-            </plugin> -->
+            </plugin>
         </plugins>
     </build>
 </project>
