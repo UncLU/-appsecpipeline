@@ -135,8 +135,6 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>
-    <build>
         <finalName>iameter</finalName>
         <plugins>
 
@@ -163,5 +161,7 @@
                 <version>8.4.0</version>
             </plugin>
         </plugins>
+    
     </build>
+    
 </project>
