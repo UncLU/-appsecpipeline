@@ -93,6 +93,22 @@
         </resources>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
+        
+            <plugin>
+                <dependency>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.3.2</version>
+                </dependency>
+            </plugin>
+
+            <plugin>
+                <dependency>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>8.4.0</version>
+                </dependency>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
