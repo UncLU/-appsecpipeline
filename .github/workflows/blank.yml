@@ -30,11 +30,11 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -B -V
         
-      - name: Upload WAR
+      - name: Upload WAR as artifact
         uses: actions/upload-artifact@v3
         with:
           name: webapp
-          path: target/iameter.war
+          path: target/diameter.war
           retention-days: 14
 
   semgrep:
