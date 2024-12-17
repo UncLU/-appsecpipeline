@@ -30,11 +30,11 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -B -V
         
-      - name: Upload WAR as artifact
+      - name: Upload WAR
         uses: actions/upload-artifact@v3
         with:
           name: webapp
-          path: target/diameter.war
+          path: target/iameter.war
           retention-days: 14
 
   semgrep:
@@ -57,8 +57,8 @@ jobs:
             --config "p/secrets" \
             --config "p/owasp-top-ten" \
             --output reports/semgrep-results.sarif \
-            --sarif \
-            --autofix || true
+            --sarif || true
+            # --autofix || true
           
       - name: Create Pull Request with fixes
         uses: peter-evans/create-pull-request@v5
