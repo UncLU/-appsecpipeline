@@ -28,7 +28,7 @@ jobs:
           cache: 'maven'
 
       - name: Build with Maven
-        run: mvn clean package -B -V -DskipTests
+        run: mvn clean package -B -V
         
       - name: Upload WAR
         uses: actions/upload-artifact@v3
@@ -56,7 +56,7 @@ jobs:
             --config "p/java" \
             --config "p/secrets" \
             --config "p/owasp-top-ten" \
-            --output semgrep-results.sarif \
+            --output reports/semgrep-results.sarif \
             --sarif \
             --autofix || true
           
@@ -76,34 +76,30 @@ jobs:
           delete-branch: true
           
       - name: Upload SARIF file
-        uses:  github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: semgrep-results.sarif
+          sarif_file: reports/semgrep-results.sarif
 
           
       - name: Upload Semgrep Results
         uses: actions/upload-artifact@v3
         with:
           name: semgrep-results
-          path: semgrep-results.sarif
-          retention-days: 4
+          path: reports/semgrep-results.sarif
+          retention-days: 14
 
-#   zap_scan:
-#     needs: build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v3
+  zap_scan:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
-#       - name: Download WAR
-#         uses: actions/download-artifact@v3
-        
-#         with:
-#             name: webapp
-#             path: target/
-            
-#       - name: Display structure of downloaded files
-#         run: ls -R
-            
+      - name: Download WAR
+        uses: actions/download-artifact@v3
+        with:
+          name: webapp
+          path: target/
+
       - name: Setup Tomcat
         run: |
           wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.83/bin/apache-tomcat-9.0.83.tar.gz
@@ -181,15 +177,14 @@ jobs:
           retention-days: 14
 
   publish_security_reports:
-    needs: [semgrep, dependency_check]
-    # needs: [ zap_scan, ]
+    needs: [semgrep, zap_scan, dependency_check]
     runs-on: ubuntu-latest
     steps:
       - name: Create reports directory
         run: mkdir -p combined-reports
 
       - name: Download all artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           path: combined-reports
 
@@ -200,7 +195,7 @@ jobs:
           rm -rf */
 
       - name: Archive Security Results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: security-reports-bundle
           path: combined-reports/*
@@ -222,8 +217,7 @@ jobs:
             tomcat-logs
 
   notify:
-    needs: [semgrep,  dependency_check]
-    # needs: [zap_scan,]
+    needs: [semgrep, zap_scan, dependency_check]
     runs-on: ubuntu-latest
     if: always()
     steps:
@@ -236,7 +230,7 @@ jobs:
             
             Results summary:
             - Semgrep scan: ${{needs.semgrep.result}}
-            
+            - ZAP scan: ${{needs.zap_scan.result}}
             - Dependency check: ${{needs.dependency_check.result}}
             
             Check full results here:
