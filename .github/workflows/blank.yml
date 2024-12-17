@@ -98,7 +98,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: webapp
-          path: target/
+          path: target/iameter.war
 
       - name: Setup Tomcat
         run: |
